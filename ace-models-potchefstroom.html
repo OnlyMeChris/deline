@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ace Models Potchefstroom — Elite Modeling Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #1B1B1B;
+    --gold: #C8A96B;
+    --gold-light: #E2C98A;
+    --gold-dark: #9A7D45;
+    --white: #FFFFFF;
+    --off-white: #F7F4EE;
+    --grey: #6C6C6C;
+    --light-grey: #F1EFEA;
+    --bg: #FFFFFF;
+    --text: #161616;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--off-white);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    padding: 22px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.5s, padding 0.4s;
+    background: transparent;
+  }
+  nav.scrolled {
+    background: rgba(255,255,255,0.95);
+    padding: 14px 60px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-logo span { color: var(--text); font-weight: 300; font-size: 0.78rem; display: block; letter-spacing: 0.35em; text-transform: uppercase; margin-top: -2px; }
+  .nav-links { display: flex; gap: 38px; list-style: none; }
+  .nav-links a {
+    color: var(--text); text-decoration: none;
+    font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+    font-weight: 400; opacity: 0.85;
+    transition: opacity 0.3s, color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+  .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold); }
+  .nav-cta {
+    background: transparent; border: 1px solid var(--gold); color: var(--gold);
+    padding: 10px 28px; font-size: 0.65rem; letter-spacing: 0.25em;
+    text-transform: uppercase; cursor: pointer; transition: all 0.35s;
+    font-family: 'Raleway', sans-serif; font-weight: 500; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--black); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 1px; background: var(--text); transition: all 0.3s; }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 820px;
+    position: relative;
+    display: flex; align-items: center;
+    padding: 120px 60px 80px;
+    background: var(--white);
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    align-items: center;
+  }
+  .hero-copy {
+    max-width: 620px;
+  }
+  .hero-visual {
+    display: flex; align-items: center; justify-content: center;
+  }
+  .img-card {
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 4 / 5;
+    background: var(--light-grey);
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 28px 80px rgba(0,0,0,0.08);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-bg-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #f7f4ee 0%, #e8e3d7 40%, #f8f5f0 100%);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 0.65rem; letter-spacing: 0.45em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300; line-height: 1.05;
+    margin-bottom: 28px; letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 0.92rem; letter-spacing: 0.08em; line-height: 1.85;
+    opacity: 0.72; max-width: 520px; margin-bottom: 40px; font-weight: 300;
+    color: #4d4d4d;
+  }
+  .hero-btns { display: flex; gap: 18px; flex-wrap: wrap; }
+  .btn-gold {
+    background: var(--gold); color: var(--black);
+    padding: 15px 40px; font-size: 0.68rem; letter-spacing: 0.3em;
+    text-transform: uppercase; font-weight: 600; cursor: pointer;
+    border: none; transition: all 0.35s; text-decoration: none; display: inline-block;
+    font-family: 'Raleway', sans-serif;
+  }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,169,107,0.25); }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    padding: 14px 40px; font-size: 0.68rem; letter-spacing: 0.3em;
+    text-transform: uppercase; font-weight: 400; cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.12); transition: all 0.35s;
+    text-decoration: none; display: inline-block; font-family: 'Raleway', sans-serif;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); background: rgba(232,201,138,0.12); }
+  .hero-scroll {
+    position: absolute; bottom: 40px; right: 60px; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; opacity: 0.55;
+    cursor: pointer; color: var(--grey);
+  }
+  .hero-scroll::after {
+    content: ''; width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--grey), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0%,100%{opacity:0.5;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.1)} }
+
+  /* ── SECTION BASICS ── */
+  section { padding: 110px 60px; }
+  .section-eyebrow {
+    font-size: 0.6rem; letter-spacing: 0.45em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .section-eyebrow::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 300; line-height: 1.15; letter-spacing: -0.01em;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .gold-line { width: 60px; height: 1px; background: var(--gold); margin: 28px 0; }
+  .gold-line.center { margin: 28px auto; }
+  .text-center { text-align: center; }
+  .lead-text {
+    font-size: 0.88rem; line-height: 1.95; opacity: 0.7; font-weight: 300;
+    max-width: 620px; letter-spacing: 0.02em;
+  }
+
+  /* ── MODEL CARDS ── */
+  .model-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 70px; }
+  .model-card { position: relative; overflow: hidden; aspect-ratio: 3/4; cursor: pointer; }
+  .model-card-img {
+    width: 100%; height: 100%;
+    background: var(--light-grey);
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .model-card-img img { width: 100%; height: 100%; object-fit: cover; }
+  .model-card-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px;
+  }
+  .model-card:hover .model-card-img { transform: scale(1.06); }
+  .model-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.4s;
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;
+  }
+  .model-card:hover .model-card-overlay { opacity: 1; }
+  .model-card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; }
+  .model-card-tag { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-top: 4px; }
+
+  /* ── STATS ── */
+  .stats-section {
+    background: var(--white);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    padding: 0; border-top: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .stat-item {
+    padding: 70px 40px; text-align: center;
+    border-right: 1px solid rgba(200,169,107,0.1);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; font-weight: 300; color: var(--gold); line-height: 1;
+  }
+  .stat-label { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.5; margin-top: 12px; }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap { overflow: hidden; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); padding: 20px 0; background: var(--white); }
+  .marquee { display: flex; gap: 60px; animation: marquee 28s linear infinite; white-space: nowrap; }
+  .marquee-item { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--gold); opacity: 0.6; letter-spacing: 0.08em; flex-shrink: 0; }
+  .marquee-dot { color: var(--gold); opacity: 0.4; }
+  @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* ── TWO-COL LAYOUT ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+  .two-col.reverse .col-img { order: -1; }
+  .col-img { position: relative; }
+  .col-img-main { width: 100%; aspect-ratio: 4/5; background: var(--light-grey); overflow: hidden; }
+  .col-img-main img { width: 100%; height: 100%; object-fit: cover; }
+  .col-img-accent {
+    position: absolute; bottom: -30px; right: -30px;
+    width: 55%; aspect-ratio: 1/1;
+    background: var(--light-grey); border: 4px solid var(--black); overflow: hidden;
+  }
+  .col-img-accent img { width: 100%; height: 100%; object-fit: cover; }
+  .img-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1a1a1a, #111);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(200,169,107,0.4); flex-direction: column; gap: 8px;
+  }
+  .img-placeholder svg { opacity: 0.3; }
+
+  /* ── TRAINING CARDS ── */
+  .training-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 60px; }
+  .training-card {
+    background: var(--light-grey); padding: 50px 38px;
+    border-top: 2px solid transparent; transition: border-color 0.3s, transform 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .training-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .training-card:hover::before { transform: scaleX(1); }
+  .training-card:hover { transform: translateY(-4px); }
+  .training-number { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 300; color: rgba(200,169,107,0.15); line-height: 1; margin-bottom: 20px; }
+  .training-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 16px; }
+  .training-desc { font-size: 0.78rem; line-height: 1.85; opacity: 0.6; font-weight: 300; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonial-section { background: var(--white); text-align: center; }
+  .testimonials-track { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; margin-top: 60px; }
+  .testimonial {
+    padding: 44px 36px;
+    background: var(--light-grey);
+    border: 1px solid rgba(0,0,0,0.08);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .testimonial:hover { border-color: rgba(200,169,107,0.35); }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-style: italic; line-height: 1.75;
+    opacity: 0.85; margin-bottom: 28px;
+  }
+  .testimonial-author { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+
+  /* ── GALLERY ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: repeat(2, 280px);
+    gap: 16px; margin-top: 60px;
+  }
+  .gallery-item { overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item:first-child { grid-row: 1 / 3; }
+  .gallery-item-img {
+    width: 100%; height: 100%;
+    background: var(--light-grey);
+    transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gallery-item-img img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-item:hover .gallery-item-img { transform: scale(1.05); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #F7F4EE;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 80px 60px 40px;
+  }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  .footer-brand h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; color: var(--black); }
+  .footer-brand p { font-size: 0.75rem; line-height: 1.9; opacity: 0.7; margin-top: 16px; max-width: 280px; font-weight: 300; color: var(--text); }
+  .footer-col h4 { font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; font-weight: 500; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { font-size: 0.75rem; color: rgba(22,22,22,0.78); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
+  .footer-col ul li a:hover { color: var(--gold); }
+  .footer-bottom { border-top: 1px solid rgba(0,0,0,0.08); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 0.65rem; opacity: 0.75; letter-spacing: 0.1em; color: rgba(22,22,22,0.85); }
+  .social-links { display: flex; gap: 20px; }
+  .social-links a { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(22,22,22,0.75); text-decoration: none; transition: color 0.3s; }
+  .social-links a:hover { color: var(--gold); }
+
+  /* ── ABOUT PAGE ── */
+  .about-hero { height: 70vh; position: relative; display: flex; align-items: center; padding: 0 60px; overflow: hidden; }
+  .about-hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #f7f4ee 0%, #efe8db 100%); }
+  .about-hero-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.65); }
+  .about-hero-content { position: relative; z-index: 2; padding-top: 80px; }
+  .page-tag { font-size: 0.6rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .page-tag::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
+  .page-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 300; line-height: 1.1; }
+  .page-hero-title em { font-style: italic; color: var(--gold); }
+
+  /* ── DIRECTOR SECTION ── */
+  .director-section { background: var(--light-grey); padding: 110px 60px; }
+  .director-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
+  .director-photo { aspect-ratio: 3/4; background: var(--light-grey); overflow: hidden; position: relative; }
+  .director-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .director-badge {
+    position: absolute; bottom: 30px; left: 30px;
+    background: var(--gold); color: var(--black);
+    padding: 12px 20px;
+    font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600;
+  }
+  .director-name { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; margin-bottom: 6px; }
+  .director-title { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
+  .achievement-list { list-style: none; margin-top: 24px; }
+  .achievement-list li { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; font-size: 0.8rem; line-height: 1.6; opacity: 0.75; }
+  .achievement-list li::before { content: '✦'; color: var(--gold); font-size: 0.5rem; margin-top: 5px; flex-shrink: 0; }
+
+  /* ── PRICING ── */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 60px; }
+  .pricing-card {
+    background: var(--light-grey); padding: 54px 40px;
+    border: 1px solid rgba(200,169,107,0.1);
+    position: relative; transition: all 0.4s; text-align: center;
+  }
+  .pricing-card.featured {
+    background: var(--white);
+    border-color: var(--gold);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+    transform: translateY(-10px);
+  }
+  .pricing-card:hover { border-color: var(--gold); }
+  .pricing-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: var(--black);
+    padding: 6px 18px; font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600;
+  }
+  .pricing-tier { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .pricing-amount { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; line-height: 1; }
+  .pricing-period { font-size: 0.68rem; opacity: 0.5; letter-spacing: 0.1em; margin-top: 6px; }
+  .pricing-divider { width: 40px; height: 1px; background: var(--gold); margin: 28px auto; }
+  .pricing-features { list-style: none; text-align: left; }
+  .pricing-features li { font-size: 0.75rem; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); opacity: 0.75; display: flex; align-items: center; gap: 10px; }
+  .pricing-features li::before { content: '—'; color: var(--gold); font-size: 0.6rem; }
+  .pricing-cta { display: block; margin-top: 36px; padding: 14px 32px; text-align: center; font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.35s; font-family: 'Raleway', sans-serif; }
+  .pricing-cta-outline { border: 1px solid rgba(200,169,107,0.4); color: var(--gold); }
+  .pricing-cta-outline:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+  .pricing-cta-fill { background: var(--gold); color: var(--black); border: 1px solid var(--gold); }
+  .pricing-cta-fill:hover { background: var(--gold-light); }
+
+  /* ── SCHEDULE ── */
+  .schedule-table { width: 100%; border-collapse: collapse; margin-top: 50px; }
+  .schedule-table th { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); padding: 18px 24px; text-align: left; border-bottom: 1px solid rgba(200,169,107,0.2); }
+  .schedule-table td { font-size: 0.78rem; padding: 18px 24px; border-bottom: 1px solid rgba(255,255,255,0.04); opacity: 0.75; }
+  .schedule-table tr:hover td { opacity: 1; background: rgba(200,169,107,0.03); }
+  .age-badge { background: rgba(200,169,107,0.12); color: var(--gold); padding: 4px 12px; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; display: inline-block; }
+
+  /* ── APPLICATION FORM ── */
+  .form-hero { height: 50vh; position: relative; display: flex; align-items: center; padding: 0 60px; overflow: hidden; }
+  .form-hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #f5f2eb, #ede6d8); }
+  .form-hero-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.55); }
+  .form-section { max-width: 820px; margin: 0 auto; padding: 90px 60px; }
+  .form-step-indicator { display: flex; gap: 0; margin-bottom: 60px; }
+  .form-step { flex: 1; text-align: center; padding: 14px; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; border-bottom: 1px solid rgba(200,169,107,0.2); color: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s; }
+  .form-step.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .form-step.done { color: rgba(200,169,107,0.6); border-bottom-color: rgba(200,169,107,0.3); }
+  .form-group { margin-bottom: 28px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form-label { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.12);
+    border-bottom: 1px solid rgba(200,169,107,0.25);
+    border-top: none; border-left: none; border-right: none;
+    color: var(--white); padding: 14px 0; font-size: 0.82rem;
+    font-family: 'Raleway', sans-serif; font-weight: 300; letter-spacing: 0.05em;
+    outline: none; transition: border-color 0.3s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-bottom-color: var(--gold); }
+  .form-input::placeholder { opacity: 0.35; }
+  .form-select { background: var(--white); -webkit-appearance: none; cursor: pointer; }
+  .form-textarea { resize: vertical; min-height: 100px; border: 1px solid rgba(200,169,107,0.15); padding: 14px; background: rgba(255,255,255,0.02); }
+  .form-file { border: 1px dashed rgba(200,169,107,0.25); padding: 40px; text-align: center; cursor: pointer; transition: all 0.3s; }
+  .form-file:hover { border-color: var(--gold); background: rgba(200,169,107,0.03); }
+  .form-file-icon { font-size: 2rem; margin-bottom: 12px; opacity: 0.3; }
+  .form-file-text { font-size: 0.72rem; opacity: 0.5; letter-spacing: 0.08em; }
+  .form-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 50px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.06); }
+
+  /* ── CONTACT PAGE ── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .contact-info-cards { display: flex; flex-direction: column; gap: 2px; margin-top: 50px; }
+  .contact-card { background: var(--light-grey); padding: 30px 32px; border-left: 2px solid transparent; transition: border-color 0.3s; }
+  .contact-card:hover { border-left-color: var(--gold); }
+  .contact-card-icon { font-size: 1.2rem; margin-bottom: 10px; opacity: 0.5; }
+  .contact-card-label { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .contact-card-value { font-size: 0.82rem; opacity: 0.8; line-height: 1.6; }
+  .map-placeholder { width: 100%; height: 380px; background: var(--light-grey); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; border: 1px solid rgba(200,169,107,0.1); margin-top: 40px; }
+  .map-placeholder p { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.4; }
+  .whatsapp-btn { display: flex; align-items: center; gap: 14px; background: #075E54; color: var(--white); padding: 18px 32px; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: all 0.3s; margin-top: 24px; width: fit-content; }
+  .whatsapp-btn:hover { background: #128C7E; transform: translateX(4px); }
+  .faq-section { padding: 90px 60px; }
+  .faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .faq-q { padding: 24px 0; font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: color 0.3s; }
+  .faq-q:hover { color: var(--gold); }
+  .faq-icon { color: var(--gold); font-size: 1.2rem; transition: transform 0.3s; }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .faq-a.open { max-height: 200px; }
+  .faq-a-inner { padding: 0 0 24px; font-size: 0.8rem; line-height: 1.9; opacity: 0.65; }
+
+  /* ── ACHIEVEMENTS PAGE ── */
+  .achievement-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 60px; }
+  .achievement-card { background: var(--light-grey); padding: 50px 38px; position: relative; overflow: hidden; transition: all 0.4s; }
+  .achievement-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); transform: scaleX(0); transition: transform 0.4s; }
+  .achievement-card:hover::after { transform: scaleX(1); }
+  .achievement-card:hover { transform: translateY(-4px); }
+  .achievement-icon { font-size: 2.5rem; margin-bottom: 18px; opacity: 0.6; }
+  .achievement-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 12px; }
+  .achievement-subtitle { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .achievement-desc { font-size: 0.78rem; line-height: 1.85; opacity: 0.6; }
+
+  /* ── ANIMATIONS ── */
+  .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--white); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 36px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 1.5rem; font-family: 'Cormorant Garamond', serif; color: var(--text); text-decoration: none; letter-spacing: 0.1em; }
+    .mobile-menu a:hover { color: var(--gold); }
+    section { padding: 70px 24px; }
+    .hero-content { padding: 0 24px; }
+    .hero h1 { font-size: 2.8rem; }
+    .two-col { grid-template-columns: 1fr; gap: 50px; }
+    .two-col.reverse .col-img { order: 0; }
+    .col-img-accent { display: none; }
+    .model-grid { grid-template-columns: 1fr 1fr; }
+    .stats-section { grid-template-columns: repeat(2,1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
+    .training-grid { grid-template-columns: 1fr; }
+    .testimonials-track { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item:first-child { grid-row: auto; grid-column: 1/-1; height: 280px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .pricing-card.featured { transform: none; }
+    .director-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .achievement-grid { grid-template-columns: 1fr 1fr; }
+    .about-hero, .form-hero { padding: 0 24px; height: 55vh; }
+    .schedule-table { display: block; overflow-x: auto; }
+    .faq-section { padding: 60px 24px; }
+  }
+  @media (max-width: 480px) {
+    .model-grid { grid-template-columns: 1fr; }
+    .achievement-grid { grid-template-columns: 1fr; }
+    .stats-section { grid-template-columns: 1fr 1fr; }
+    .hero-btns { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo" onclick="navigate('home')">
+    ACE MODELS
+    <span>Potchefstroom Academy</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="navigate('home')" class="active" id="nav-home">Home</a></li>
+    <li><a href="#" onclick="navigate('about')" id="nav-about">About Us</a></li>
+    <li><a href="#" onclick="navigate('achievements')" id="nav-achievements">Achievements</a></li>
+    <li><a href="#" onclick="navigate('training')" id="nav-training">Training</a></li>
+    <li><a href="#" onclick="navigate('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="navigate('apply')">Apply Now</a>
+  <div class="hamburger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ HOME PAGE ═══════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="hero-eyebrow">Ace Models Potchefstroom</div>
+        <h1>Become the <em>Best Version</em><br>of Yourself</h1>
+        <p class="hero-sub">Where confidence is cultivated, elegance is refined, and extraordinary young women discover the power of their presence.</p>
+        <div class="hero-btns">
+          <a href="#" class="btn-gold" onclick="navigate('apply')">Apply Now</a>
+          <a href="#" class="btn-outline" onclick="navigate('training')">View Programs</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="img-card">
+          <div class="hero-bg-placeholder">
+            <!-- Replace with: <img src="your-hero-image.jpg" alt="Ace Models Hero"> -->
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="opacity:0.25">
+              <rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/>
+              <circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/>
+              <path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/>
+            </svg>
+            <p style="font-size:0.65rem;letter-spacing:0.26em;text-transform:uppercase;color:rgba(22,22,22,0.45);margin-top:20px">Hero Image Placeholder</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span class="marquee-item">Runway Training</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Pageant Coaching</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Photographic Modelling</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Personal Confidence</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Etiquette & Grooming</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Public Speaking</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Portfolio Development</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Youth Empowerment</span><span class="marquee-dot">✦</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="marquee-item">Runway Training</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Pageant Coaching</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Photographic Modelling</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Personal Confidence</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Etiquette & Grooming</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Public Speaking</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Portfolio Development</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Youth Empowerment</span><span class="marquee-dot">✦</span>
+    </div>
+  </div>
+
+  <!-- FEATURED MODELS -->
+  <section>
+    <div class="fade-up">
+      <div class="section-eyebrow">Our Stars</div>
+      <h2 class="section-title">Featured <em>Models</em></h2>
+    </div>
+    <div class="model-grid fade-up">
+      <div class="model-card">
+        <div class="model-card-img">
+          <div class="img-placeholder">
+            <!-- Replace with: <img src="model-1.jpg" alt="Model Name"> -->
+            <svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg>
+            <span>Model Photo</span>
+          </div>
+        </div>
+        <div class="model-card-overlay">
+          <div class="model-card-name">Sophia van der Berg</div>
+          <div class="model-card-tag">Runway · Pageant</div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="model-card-img">
+          <div class="img-placeholder">
+            <svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg>
+            <span>Model Photo</span>
+          </div>
+        </div>
+        <div class="model-card-overlay">
+          <div class="model-card-name">Zara Pretorius</div>
+          <div class="model-card-tag">Editorial · Commercial</div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="model-card-img">
+          <div class="img-placeholder">
+            <svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg>
+            <span>Model Photo</span>
+          </div>
+        </div>
+        <div class="model-card-overlay">
+          <div class="model-card-name">Lila Mostert</div>
+          <div class="model-card-tag">Pageant · Youth</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SNIPPET -->
+  <section style="background:var(--light-grey)">
+    <div class="two-col fade-up">
+      <div class="col-text">
+        <div class="section-eyebrow">Our Story</div>
+        <h2 class="section-title">Elite Training.<br><em>Limitless Potential.</em></h2>
+        <div class="gold-line"></div>
+        <p class="lead-text" style="max-width:100%">Ace Models Potchefstroom is an affiliate of the internationally recognised Ace Models International. We are dedicated to developing confident, poised, and empowered young women through world-class training in modelling, pageantry, and personal development.</p>
+        <p style="font-size:0.78rem;line-height:1.9;opacity:0.55;margin-top:18px;font-weight:300">Under the direction of the passionate and accomplished Deline Krog, our academy nurtures each student's unique beauty, personality, and potential — transforming them from the inside out.</p>
+        <a href="#" class="btn-gold" style="margin-top:36px;display:inline-block" onclick="navigate('about')">Discover Our Story</a>
+      </div>
+      <div class="col-img">
+        <div class="col-img-main">
+          <div class="img-placeholder">
+            <!-- Replace with: <img src="about-image.jpg" alt="About Ace Models"> -->
+            <svg width="50" height="50" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg>
+            <span>About Image</span>
+          </div>
+        </div>
+        <div class="col-img-accent">
+          <div class="img-placeholder" style="font-size:0.55rem">
+            <svg width="30" height="30" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg>
+            <span>Accent Image</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-section fade-up">
+    <div class="stat-item">
+      <div class="stat-number">350+</div>
+      <div class="stat-label">Students Trained</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">12+</div>
+      <div class="stat-label">Years of Excellence</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">80+</div>
+      <div class="stat-label">Titles Won</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">World</div>
+      <div class="stat-label">Champion Lineage</div>
+    </div>
+  </div>
+
+  <!-- TRAINING HIGHLIGHTS -->
+  <section>
+    <div class="text-center fade-up">
+      <div class="section-eyebrow" style="justify-content:center">What We Offer</div>
+      <h2 class="section-title">Programs Built for <em>Greatness</em></h2>
+      <div class="gold-line center"></div>
+    </div>
+    <div class="training-grid fade-up">
+      <div class="training-card">
+        <div class="training-number">01</div>
+        <div class="training-title">Runway & Catwalk</div>
+        <p class="training-desc">Master the art of movement, posture, and presence. Our runway training instils the confidence and technique to command any stage.</p>
+      </div>
+      <div class="training-card">
+        <div class="training-number">02</div>
+        <div class="training-title">Photographic Modelling</div>
+        <p class="training-desc">Learn to work with photographers, understand angles, expression, and body language to create stunning editorial images.</p>
+      </div>
+      <div class="training-card">
+        <div class="training-number">03</div>
+        <div class="training-title">Pageant Coaching</div>
+        <p class="training-desc">Comprehensive pageant preparation including interview skills, evening gown, swimwear, and overall presentation excellence.</p>
+      </div>
+      <div class="training-card">
+        <div class="training-number">04</div>
+        <div class="training-title">Etiquette & Grooming</div>
+        <p class="training-desc">Refined manners, table etiquette, social grace, and personal grooming that sets our graduates apart in every environment.</p>
+      </div>
+      <div class="training-card">
+        <div class="training-number">05</div>
+        <div class="training-title">Public Speaking</div>
+        <p class="training-desc">Develop a compelling, articulate voice. Build confidence to communicate with poise in front of audiences of any size.</p>
+      </div>
+      <div class="training-card">
+        <div class="training-number">06</div>
+        <div class="training-title">Portfolio Development</div>
+        <p class="training-desc">Professional photo shoots, portfolio curation, and personal branding guidance to launch your modelling career.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonial-section">
+    <div class="text-center fade-up">
+      <div class="section-eyebrow" style="justify-content:center">Words of Grace</div>
+      <h2 class="section-title">What Our <em>Students Say</em></h2>
+    </div>
+    <div class="testimonials-track fade-up">
+      <div class="testimonial">
+        <p class="testimonial-quote">"Ace Models transformed not just how I walk, but how I see myself. The confidence I gained here has changed every aspect of my life."</p>
+        <div class="testimonial-author">Anané du Plessis — Alumni</div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-quote">"Deline has an extraordinary gift for bringing out the best in every girl. The training is world-class and the atmosphere is truly special."</p>
+        <div class="testimonial-author">Karen Venter — Parent</div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-quote">"I won my first national title after only six months of training at Ace Models Potchefstroom. The coaching here is genuinely elite."</p>
+        <div class="testimonial-author">Mia Joubert — National Title Winner</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section style="padding-bottom:0">
+    <div class="text-center fade-up" style="padding-bottom:0">
+      <div class="section-eyebrow" style="justify-content:center">The Gallery</div>
+      <h2 class="section-title">Life at <em>Ace Models</em></h2>
+      <div class="gold-line center"></div>
+    </div>
+  </section>
+  <div class="gallery-grid fade-up" style="margin:0 60px 60px;gap:3px">
+    <div class="gallery-item"><div class="gallery-item-img"><div class="img-placeholder"><!-- <img src="gallery-1.jpg"> --><svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg><span>Gallery Image 1</span></div></div></div>
+    <div class="gallery-item"><div class="gallery-item-img"><div class="img-placeholder"><svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg><span>Gallery Image 2</span></div></div></div>
+    <div class="gallery-item"><div class="gallery-item-img"><div class="img-placeholder"><svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg><span>Gallery Image 3</span></div></div></div>
+    <div class="gallery-item"><div class="gallery-item-img"><div class="img-placeholder"><svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg><span>Gallery Image 4</span></div></div></div>
+    <div class="gallery-item"><div class="gallery-item-img"><div class="img-placeholder"><svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg><span>Gallery Image 5</span></div></div></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Ace Models Potchefstroom</h3>
+        <p>An affiliate of Ace Models International. Developing tomorrow's most confident, poised, and empowered women through elite modelling and personal development training.</p>
+        <div class="social-links" style="margin-top:28px">
+          <a href="#">Instagram</a>
+          <a href="#">Facebook</a>
+          <a href="#">TikTok</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#" onclick="navigate('home')">Home</a></li>
+          <li><a href="#" onclick="navigate('about')">About Us</a></li>
+          <li><a href="#" onclick="navigate('achievements')">Achievements</a></li>
+          <li><a href="#" onclick="navigate('training')">Training & Pricing</a></li>
+          <li><a href="#" onclick="navigate('apply')">Apply Now</a></li>
+          <li><a href="#" onclick="navigate('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Training</h4>
+        <ul>
+          <li><a href="#">Runway Modelling</a></li>
+          <li><a href="#">Pageant Coaching</a></li>
+          <li><a href="#">Photographic</a></li>
+          <li><a href="#">Public Speaking</a></li>
+          <li><a href="#">Etiquette Classes</a></li>
+          <li><a href="#">Portfolio Development</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+27123456789">+27 12 345 6789</a></li>
+          <li><a href="mailto:info@acemodels-potch.co.za">info@acemodels-potch.co.za</a></li>
+          <li><a href="#">Potchefstroom, NW</a></li>
+          <li><a href="#">South Africa</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Ace Models Potchefstroom. All rights reserved. Affiliate of Ace Models International.</p>
+      <div class="social-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /home page -->
+
+<!-- ═══════════════════════════ ABOUT PAGE ═══════════════════════════ -->
+<div class="page" id="page-about">
+
+  <div class="about-hero">
+    <div class="about-hero-bg"></div>
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+      <div class="page-tag">Our Story</div>
+      <h1 class="page-hero-title">Empowering <em>Extraordinary</em><br>Young Women</h1>
+    </div>
+  </div>
+
+  <!-- MISSION -->
+  <section>
+    <div class="two-col fade-up">
+      <div>
+        <div class="section-eyebrow">Our Mission</div>
+        <h2 class="section-title">More Than <em>Modelling</em></h2>
+        <div class="gold-line"></div>
+        <p class="lead-text" style="max-width:100%">Ace Models Potchefstroom is built on a singular belief: that every young woman holds within her an extraordinary capacity for confidence, elegance, and leadership. Our academy exists to unlock that potential.</p>
+        <p style="font-size:0.78rem;line-height:1.9;opacity:0.55;margin-top:18px;font-weight:300">As a proud affiliate of Ace Models International, we bring world-class training methodologies to Potchefstroom — combining runway technique, pageant preparation, personal grooming, and deep confidence-building work into a transformative academy experience.</p>
+        <p style="font-size:0.78rem;line-height:1.9;opacity:0.55;margin-top:14px;font-weight:300">We believe that when a young woman walks with confidence, speaks with conviction, and carries herself with grace — her possibilities become limitless.</p>
+      </div>
+      <div class="col-img">
+        <div class="col-img-main">
+          <div class="img-placeholder">
+            <!-- Replace with: <img src="mission-image.jpg" alt="Mission"> -->
+            <svg width="50" height="50" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg>
+            <span>Mission Image</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section style="background:var(--light-grey)">
+    <div class="text-center fade-up">
+      <div class="section-eyebrow" style="justify-content:center">Our Values</div>
+      <h2 class="section-title">What We <em>Stand For</em></h2>
+      <div class="gold-line center"></div>
+    </div>
+    <div class="training-grid fade-up">
+      <div class="training-card">
+        <div class="training-number">✦</div>
+        <div class="training-title">Confidence Building</div>
+        <p class="training-desc">We create environments where self-belief flourishes. Every class, every session is designed to lift each student higher than when she arrived.</p>
+      </div>
+      <div class="training-card">
+        <div class="training-number">✦</div>
+        <div class="training-title">Youth Empowerment</div>
+        <p class="training-desc">From primary school to young adulthood, we invest in the whole person — nurturing leadership qualities that last far beyond the runway.</p>
+      </div>
+      <div class="training-card">
+        <div class="training-number">✦</div>
+        <div class="training-title">Professional Excellence</div>
+        <p class="training-desc">Industry-standard training, international pageant standards, and professional etiquette prepare our graduates for the world stage.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIRECTOR SECTION -->
+  <div class="director-section">
+    <div class="section-eyebrow" style="margin-bottom:50px">Branch Director</div>
+    <div class="director-grid fade-up">
+      <div class="director-photo">
+        <div class="img-placeholder">
+          <!-- Replace with: <img src="deline-krog.jpg" alt="Deline Krog"> -->
+          <svg width="60" height="60" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg>
+          <span>Deline Krog Portrait</span>
+        </div>
+        <div class="director-badge">Branch Director</div>
+      </div>
+      <div>
+        <div class="director-name">Deline Krog</div>
+        <div class="director-title">Branch Director — Ace Models Potchefstroom</div>
+        <div class="gold-line"></div>
+        <p style="font-size:0.82rem;line-height:1.95;opacity:0.7;font-weight:300">Deline Krog is more than a modelling coach — she is a visionary who has dedicated her life to empowering young women through the transformative power of modelling, performance, and personal development. Her journey from dancer and model to world champion and academy director is an inspiration to every student who walks through our doors.</p>
+        <p style="font-size:0.82rem;line-height:1.95;opacity:0.7;font-weight:300;margin-top:14px">Her warmth, expertise, and genuine passion for youth development create an academy culture where every girl feels seen, valued, and challenged to become her absolute best self.</p>
+        <ul class="achievement-list" style="margin-top:28px">
+          <li>Accomplished model and performing artist with extensive industry experience</li>
+          <li>Decorated dancer with national and international competitive achievements</li>
+          <li>WLDF World Dance Champion — bringing world-class standards to every class</li>
+          <li>Passionate advocate for youth confidence and leadership development</li>
+          <li>Certified Ace Models International affiliate director and coach</li>
+          <li>Mentor to hundreds of young women across South Africa</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand"><h3>Ace Models Potchefstroom</h3><p>Affiliate of Ace Models International. Developing tomorrow's leaders through elite modelling and personal development.</p><div class="social-links" style="margin-top:28px"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a></div></div>
+      <div class="footer-col"><h4>Navigate</h4><ul><li><a href="#" onclick="navigate('home')">Home</a></li><li><a href="#" onclick="navigate('about')">About Us</a></li><li><a href="#" onclick="navigate('achievements')">Achievements</a></li><li><a href="#" onclick="navigate('training')">Training</a></li><li><a href="#" onclick="navigate('apply')">Apply Now</a></li><li><a href="#" onclick="navigate('contact')">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:+27123456789">+27 12 345 6789</a></li><li><a href="mailto:info@acemodels-potch.co.za">info@acemodels-potch.co.za</a></li><li><a href="#">Potchefstroom, NW</a></li></ul></div>
+      <div class="footer-col"><h4>Training</h4><ul><li><a href="#">Runway Modelling</a></li><li><a href="#">Pageant Coaching</a></li><li><a href="#">Photographic</a></li><li><a href="#">Etiquette Classes</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Ace Models Potchefstroom. All rights reserved.</p><div class="social-links"><a href="#">Privacy Policy</a><a href="#">Terms</a></div></div>
+  </footer>
+
+</div><!-- /about page -->
+
+<!-- ═══════════════════════════ ACHIEVEMENTS PAGE ═══════════════════════════ -->
+<div class="page" id="page-achievements">
+
+  <div class="about-hero">
+    <div class="about-hero-bg"></div>
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+      <div class="page-tag">Excellence Recognised</div>
+      <h1 class="page-hero-title">Our <em>Award-Winning</em><br>Legacy</h1>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-section fade-up">
+    <div class="stat-item"><div class="stat-number">80+</div><div class="stat-label">Titles Won</div></div>
+    <div class="stat-item"><div class="stat-number">15+</div><div class="stat-label">National Champions</div></div>
+    <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">International Titles</div></div>
+    <div class="stat-item"><div class="stat-number">350+</div><div class="stat-label">Lives Changed</div></div>
+  </div>
+
+  <!-- ACHIEVEMENTS GRID -->
+  <section>
+    <div class="fade-up">
+      <div class="section-eyebrow">Our Achievements</div>
+      <h2 class="section-title">Champions Born <em>Here</em></h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="achievement-grid fade-up">
+      <div class="achievement-card">
+        <div class="achievement-icon">👑</div>
+        <div class="achievement-title">National Pageant Champions</div>
+        <div class="achievement-subtitle">Multiple Titles</div>
+        <p class="achievement-desc">Our students have won prestigious national pageant titles across South Africa, representing Potchefstroom on the national stage with distinction and grace.</p>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-icon">🌍</div>
+        <div class="achievement-title">International Representations</div>
+        <div class="achievement-subtitle">World Stage</div>
+        <p class="achievement-desc">Ace Models Potchefstroom graduates have represented South Africa internationally, bringing home honours and elevating our academy's global reputation.</p>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-icon">✨</div>
+        <div class="achievement-title">WLDF World Champions</div>
+        <div class="achievement-subtitle">Dance & Performance</div>
+        <p class="achievement-desc">Following in the footsteps of our director, several of our students have achieved World Latin Dance Federation championship titles.</p>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-icon">📸</div>
+        <div class="achievement-title">Editorial & Commercial Success</div>
+        <div class="achievement-subtitle">Industry Placements</div>
+        <p class="achievement-desc">Graduates have been placed in editorial spreads, brand campaigns, and commercial modelling contracts across South Africa and beyond.</p>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-icon">🎓</div>
+        <div class="achievement-title">Scholarship Recipients</div>
+        <div class="achievement-subtitle">Academic Excellence</div>
+        <p class="achievement-desc">Our commitment to holistic development has produced scholarship recipients who combine modelling excellence with outstanding academic achievement.</p>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-title">Pageant Triple Crowns</div>
+        <div class="achievement-subtitle">Best Overall Awards</div>
+        <p class="achievement-desc">Multiple students have achieved triple crown honours — winning interview, talent, and evening gown categories in a single competition season.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUCCESS STORIES -->
+  <section style="background:var(--light-grey)">
+    <div class="text-center fade-up">
+      <div class="section-eyebrow" style="justify-content:center">Success Stories</div>
+      <h2 class="section-title">Transformations that <em>Inspire</em></h2>
+      <div class="gold-line center"></div>
+    </div>
+    <div class="testimonials-track fade-up" style="margin-top:60px">
+      <div class="testimonial">
+        <p class="testimonial-quote">"When I joined Ace Models I could barely make eye contact. Two years later I won Miss Teen Potchefstroom and addressed an audience of thousands."</p>
+        <div class="testimonial-author">Leandri Nel — Miss Teen Potchefstroom</div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-quote">"The training at Ace Models gave me the competitive edge to win my first national title. Deline's coaching is truly world-class."</p>
+        <div class="testimonial-author">Tanya Fourie — National Title Holder</div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-quote">"From a shy small-town girl to an international pageant finalist — Ace Models Potchefstroom made this possible."</p>
+        <div class="testimonial-author">Riëtte Kok — International Finalist</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section>
+    <div class="text-center fade-up">
+      <div class="section-eyebrow" style="justify-content:center">Showcase Gallery</div>
+      <h2 class="section-title">Moments of <em>Triumph</em></h2>
+    </div>
+    <div class="model-grid fade-up" style="margin-top:50px">
+      <div class="model-card"><div class="model-card-img"><div class="img-placeholder"><!-- <img src="achievement-1.jpg"> --><svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg><span>Achievement Photo</span></div></div><div class="model-card-overlay"><div class="model-card-name">National Title 2024</div><div class="model-card-tag">Pageant · Champion</div></div></div>
+      <div class="model-card"><div class="model-card-img"><div class="img-placeholder"><svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg><span>Achievement Photo</span></div></div><div class="model-card-overlay"><div class="model-card-name">Runway Showcase</div><div class="model-card-tag">Fashion · Editorial</div></div></div>
+      <div class="model-card"><div class="model-card-img"><div class="img-placeholder"><svg width="40" height="40" viewBox="0 0 80 80" fill="none"><rect x="20" y="10" width="40" height="50" rx="2" stroke="#C8A96B" stroke-width="1.5"/><circle cx="40" cy="30" r="8" stroke="#C8A96B" stroke-width="1.5"/><path d="M20 60 Q40 45 60 60" stroke="#C8A96B" stroke-width="1.5" fill="none"/></svg><span>Achievement Photo</span></div></div><div class="model-card-overlay"><div class="model-card-name">International Stage</div><div class="model-card-tag">Global · Competition</div></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-top"><div class="footer-brand"><h3>Ace Models Potchefstroom</h3><p>Affiliate of Ace Models International.</p><div class="social-links" style="margin-top:28px"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a></div></div><div class="footer-col"><h4>Navigate</h4><ul><li><a href="#" onclick="navigate('home')">Home</a></li><li><a href="#" onclick="navigate('about')">About Us</a></li><li><a href="#" onclick="navigate('achievements')">Achievements</a></li><li><a href="#" onclick="navigate('training')">Training</a></li><li><a href="#" onclick="navigate('apply')">Apply Now</a></li><li><a href="#" onclick="navigate('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul><li><a href="#">+27 12 345 6789</a></li><li><a href="#">info@acemodels-potch.co.za</a></li><li><a href="#">Potchefstroom, NW</a></li></ul></div><div class="footer-col"><h4>Social</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">TikTok</a></li></ul></div></div>
+    <div class="footer-bottom"><p>© 2025 Ace Models Potchefstroom. All rights reserved.</p><div class="social-links"><a href="#">Privacy Policy</a></div></div>
+  </footer>
+
+</div><!-- /achievements -->
+
+<!-- ═══════════════════════════ TRAINING PAGE ═══════════════════════════ -->
+<div class="page" id="page-training">
+
+  <div class="about-hero">
+    <div class="about-hero-bg"></div>
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+      <div class="page-tag">Programs & Investment</div>
+      <h1 class="page-hero-title">Training Built for <em>Champions</em></h1>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <section>
+    <div class="fade-up">
+      <div class="section-eyebrow">Class Schedule</div>
+      <h2 class="section-title">Training <em>Times</em></h2>
+      <div class="gold-line"></div>
+      <p class="lead-text">Classes are structured by age group to ensure tailored, developmentally appropriate coaching for every student. All classes are held at our Potchefstroom studio.</p>
+    </div>
+    <table class="schedule-table fade-up">
+      <thead>
+        <tr>
+          <th>Age Group</th>
+          <th>Day</th>
+          <th>Time</th>
+          <th>Focus</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="age-badge">5 – 8 yrs</span></td><td>Saturday</td><td>09:00 – 10:00</td><td>Junior Foundation: Posture, Movement & Confidence</td><td>60 min</td></tr>
+        <tr><td><span class="age-badge">9 – 12 yrs</span></td><td>Saturday</td><td>10:00 – 11:30</td><td>Mini Models: Runway, Etiquette & Expression</td><td>90 min</td></tr>
+        <tr><td><span class="age-badge">13 – 16 yrs</span></td><td>Saturday</td><td>11:30 – 13:30</td><td>Teen Models: Runway, Photographic & Pageant Prep</td><td>120 min</td></tr>
+        <tr><td><span class="age-badge">17 – 21 yrs</span></td><td>Saturday</td><td>14:00 – 16:30</td><td>Senior Models: Full Programme + Portfolio</td><td>150 min</td></tr>
+        <tr><td><span class="age-badge">All Ages</span></td><td>Wednesday</td><td>17:00 – 18:30</td><td>Public Speaking & Etiquette (Advanced)</td><td>90 min</td></tr>
+        <tr><td><span class="age-badge">13 – 21 yrs</span></td><td>Thursday</td><td>17:30 – 19:00</td><td>Pageant Intensive — Competition Prep</td><td>90 min</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.7rem;opacity:0.45;margin-top:20px;letter-spacing:0.05em">* Schedule subject to seasonal adjustments. Private coaching available by appointment.</p>
+  </section>
+
+  <!-- PRICING -->
+  <section style="background:var(--light-grey)">
+    <div class="text-center fade-up">
+      <div class="section-eyebrow" style="justify-content:center">Investment</div>
+      <h2 class="section-title">Choose Your <em>Journey</em></h2>
+      <div class="gold-line center"></div>
+      <p class="lead-text" style="margin:0 auto">Flexible membership options designed to accommodate every family. All prices include access to our full curriculum for the enrolled age group.</p>
+    </div>
+    <div class="pricing-grid fade-up">
+      <div class="pricing-card">
+        <div class="pricing-tier">Monthly</div>
+        <div class="pricing-amount">R695</div>
+        <div class="pricing-period">per month</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Weekly group classes</li>
+          <li>Age-appropriate curriculum</li>
+          <li>Runway & movement training</li>
+          <li>Basic etiquette coaching</li>
+          <li>Access to student showcases</li>
+          <li>Monthly progress feedback</li>
+        </ul>
+        <a href="#" class="pricing-cta pricing-cta-outline" onclick="navigate('apply')">Apply Monthly</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-tier">Quarterly</div>
+        <div class="pricing-amount">R1,850</div>
+        <div class="pricing-period">per quarter (save 11%)</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Everything in Monthly</li>
+          <li>Photographic training module</li>
+          <li>Public speaking workshops</li>
+          <li>Pageant coaching introduction</li>
+          <li>1 professional portfolio shoot</li>
+          <li>Competition preparation access</li>
+          <li>Quarterly performance review</li>
+        </ul>
+        <a href="#" class="pricing-cta pricing-cta-fill" onclick="navigate('apply')">Apply Quarterly</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Annual</div>
+        <div class="pricing-amount">R6,500</div>
+        <div class="pricing-period">per year (save 22%)</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Everything in Quarterly</li>
+          <li>Full pageant coaching programme</li>
+          <li>2 professional portfolio shoots</li>
+          <li>Priority competition entries</li>
+          <li>Personal brand development</li>
+          <li>One-on-one coaching sessions</li>
+          <li>Annual gala showcase feature</li>
+          <li>International pathway guidance</li>
+        </ul>
+        <a href="#" class="pricing-cta pricing-cta-outline" onclick="navigate('apply')">Apply Annual</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINING CATEGORIES -->
+  <section>
+    <div class="text-center fade-up">
+      <div class="section-eyebrow" style="justify-content:center">What's Included</div>
+      <h2 class="section-title">Our <em>Curriculum</em></h2>
+    </div>
+    <div class="training-grid fade-up" style="margin-top:50px">
+      <div class="training-card"><div class="training-number">01</div><div class="training-title">Runway Coaching</div><p class="training-desc">Professional catwalk technique, posture correction, pivot mastery, and the art of walking with effortless confidence and purpose.</p></div>
+      <div class="training-card"><div class="training-number">02</div><div class="training-title">Pageant Preparation</div><p class="training-desc">Comprehensive preparation covering interview skills, evening gown, swimwear presentation, personality, and on-stage performance.</p></div>
+      <div class="training-card"><div class="training-number">03</div><div class="training-title">Photographic Modelling</div><p class="training-desc">Expression, body language, posing, and working with photographers for editorial, commercial, and social media applications.</p></div>
+      <div class="training-card"><div class="training-number">04</div><div class="training-title">Etiquette & Grooming</div><p class="training-desc">Table manners, social etiquette, personal presentation, grooming standards, and the art of first impressions.</p></div>
+      <div class="training-card"><div class="training-number">05</div><div class="training-title">Public Speaking</div><p class="training-desc">Voice projection, articulation, confidence before audiences, interview technique, and media presence training.</p></div>
+      <div class="training-card"><div class="training-number">06</div><div class="training-title">Portfolio Development</div><p class="training-desc">Professional photography sessions, comp card creation, digital portfolio curation, and personal brand strategy.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-top"><div class="footer-brand"><h3>Ace Models Potchefstroom</h3><p>Affiliate of Ace Models International.</p><div class="social-links" style="margin-top:28px"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a></div></div><div class="footer-col"><h4>Navigate</h4><ul><li><a href="#" onclick="navigate('home')">Home</a></li><li><a href="#" onclick="navigate('about')">About Us</a></li><li><a href="#" onclick="navigate('achievements')">Achievements</a></li><li><a href="#" onclick="navigate('training')">Training</a></li><li><a href="#" onclick="navigate('apply')">Apply Now</a></li><li><a href="#" onclick="navigate('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul><li><a href="#">+27 12 345 6789</a></li><li><a href="#">info@acemodels-potch.co.za</a></li></ul></div><div class="footer-col"><h4>Programs</h4><ul><li><a href="#">Monthly</a></li><li><a href="#">Quarterly</a></li><li><a href="#">Annual</a></li><li><a href="#">Private Coaching</a></li></ul></div></div>
+    <div class="footer-bottom"><p>© 2025 Ace Models Potchefstroom. All rights reserved.</p></div>
+  </footer>
+
+</div><!-- /training -->
+
+<!-- ═══════════════════════════ APPLICATION PAGE ═══════════════════════════ -->
+<div class="page" id="page-apply">
+
+  <div class="form-hero">
+    <div class="form-hero-bg"></div>
+    <div class="form-hero-overlay"></div>
+    <div style="position:relative;z-index:2;padding-top:80px">
+      <div class="page-tag">Join the Academy</div>
+      <h1 class="page-hero-title">Begin Your <em>Journey</em></h1>
+    </div>
+  </div>
+
+  <div class="form-section fade-up">
+    <div style="text-align:center;margin-bottom:50px">
+      <div class="section-eyebrow" style="justify-content:center">Application Form</div>
+      <h2 class="section-title">Your <em>Story</em> Starts Here</h2>
+      <div class="gold-line center"></div>
+      <p class="lead-text" style="margin:0 auto">We welcome applications from young women of all backgrounds. Each applicant is considered individually — we look for passion, potential, and the desire to grow.</p>
+    </div>
+
+    <div class="form-step-indicator">
+      <div class="form-step active" id="step-1" onclick="goStep(1)">Personal Details</div>
+      <div class="form-step" id="step-2" onclick="goStep(2)">Experience</div>
+      <div class="form-step" id="step-3" onclick="goStep(3)">Parent / Guardian</div>
+      <div class="form-step" id="step-4" onclick="goStep(4)">Photos & Goals</div>
+    </div>
+
+    <!-- Step 1 -->
+    <div id="form-step-1">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-input" placeholder="Enter first name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-input" placeholder="Enter last name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <input type="date" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Age Group</label>
+          <select class="form-select form-input">
+            <option value="">Select age group</option>
+            <option>5 – 8 Years (Junior Foundation)</option>
+            <option>9 – 12 Years (Mini Models)</option>
+            <option>13 – 16 Years (Teen Models)</option>
+            <option>17 – 21 Years (Senior Models)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone / WhatsApp</label>
+          <input type="tel" class="form-input" placeholder="+27 xxx xxx xxxx">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Residential Area, Potchefstroom</label>
+        <input type="text" class="form-input" placeholder="e.g. Potchefstroom Central, Ikageng, ...">
+      </div>
+      <div class="form-nav">
+        <span></span>
+        <button class="btn-gold" onclick="goStep(2)">Next: Experience →</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="form-step-2" style="display:none">
+      <div class="form-group">
+        <label class="form-label">Previous Modelling Experience</label>
+        <select class="form-select form-input">
+          <option>No prior experience</option>
+          <option>Some beginner training</option>
+          <option>1–2 years experience</option>
+          <option>3+ years experience</option>
+          <option>Professional experience</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Pageant Experience</label>
+        <textarea class="form-textarea" placeholder="Please describe any pageants or competitions you have entered, even if informal..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Social Media Handles (optional)</label>
+        <div class="form-row">
+          <input type="text" class="form-input" placeholder="Instagram @handle">
+          <input type="text" class="form-input" placeholder="TikTok @handle">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Which programmes interest you?</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+          <label style="font-size:0.75rem;opacity:0.7;display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" style="accent-color:var(--gold)"> Runway &amp; Catwalk</label>
+          <label style="font-size:0.75rem;opacity:0.7;display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" style="accent-color:var(--gold)"> Pageant Coaching</label>
+          <label style="font-size:0.75rem;opacity:0.7;display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" style="accent-color:var(--gold)"> Photographic Modelling</label>
+          <label style="font-size:0.75rem;opacity:0.7;display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" style="accent-color:var(--gold)"> Public Speaking</label>
+          <label style="font-size:0.75rem;opacity:0.7;display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" style="accent-color:var(--gold)"> Etiquette &amp; Grooming</label>
+          <label style="font-size:0.75rem;opacity:0.7;display:flex;align-items:center;gap:10px;cursor:pointer"><input type="checkbox" style="accent-color:var(--gold)"> Portfolio Development</label>
+        </div>
+      </div>
+      <div class="form-nav">
+        <button class="btn-outline" onclick="goStep(1)">← Back</button>
+        <button class="btn-gold" onclick="goStep(3)">Next: Parent Details →</button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="form-step-3" style="display:none">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Parent / Guardian Name</label>
+          <input type="text" class="form-input" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Relationship</label>
+          <select class="form-select form-input">
+            <option>Mother</option>
+            <option>Father</option>
+            <option>Guardian</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Parent / Guardian Email</label>
+          <input type="email" class="form-input" placeholder="parent@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Parent / Guardian Phone</label>
+          <input type="tel" class="form-input" placeholder="+27 xxx xxx xxxx">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">How did you hear about us?</label>
+        <select class="form-select form-input">
+          <option>Instagram / Social Media</option>
+          <option>Friend or Family Referral</option>
+          <option>Google Search</option>
+          <option>School Flyer</option>
+          <option>Facebook</option>
+          <option>Previous Student</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Investment Preference</label>
+        <select class="form-select form-input">
+          <option>Monthly (R695/month)</option>
+          <option>Quarterly (R1,850/quarter)</option>
+          <option>Annual (R6,500/year)</option>
+          <option>I'd like to discuss options</option>
+        </select>
+      </div>
+      <div class="form-nav">
+        <button class="btn-outline" onclick="goStep(2)">← Back</button>
+        <button class="btn-gold" onclick="goStep(4)">Next: Photos & Goals →</button>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div id="form-step-4" style="display:none">
+      <div class="form-group">
+        <label class="form-label">Upload a Current Photo</label>
+        <div class="form-file">
+          <div class="form-file-icon">📷</div>
+          <div class="form-file-text">Click to upload or drag & drop<br><span style="font-size:0.65rem;opacity:0.5">JPG, PNG up to 10MB — clear, recent, full-length preferred</span></div>
+          <input type="file" style="display:none" accept="image/*">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Upload a Headshot (optional)</label>
+        <div class="form-file" style="padding:26px">
+          <div class="form-file-text">Click to upload headshot<br><span style="font-size:0.65rem;opacity:0.5">Clear face photo, natural light preferred</span></div>
+          <input type="file" style="display:none" accept="image/*">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Aspirations & Goals</label>
+        <textarea class="form-textarea" placeholder="Tell us about yourself — what drives you, what you hope to achieve, and why you want to join Ace Models Potchefstroom..." style="min-height:140px"></textarea>
+      </div>
+      <div class="form-group" style="margin-top:30px">
+        <label style="font-size:0.75rem;opacity:0.7;display:flex;align-items:flex-start;gap:12px;cursor:pointer;line-height:1.7">
+          <input type="checkbox" style="accent-color:var(--gold);margin-top:3px">
+          I confirm that all information provided is accurate and I agree to Ace Models Potchefstroom's terms and conditions and privacy policy.
+        </label>
+      </div>
+      <div class="form-nav">
+        <button class="btn-outline" onclick="goStep(3)">← Back</button>
+        <button class="btn-gold" onclick="submitForm()">Submit Application ✦</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-top"><div class="footer-brand"><h3>Ace Models Potchefstroom</h3><p>Affiliate of Ace Models International.</p><div class="social-links" style="margin-top:28px"><a href="#">Instagram</a><a href="#">Facebook</a></div></div><div class="footer-col"><h4>Navigate</h4><ul><li><a href="#" onclick="navigate('home')">Home</a></li><li><a href="#" onclick="navigate('about')">About</a></li><li><a href="#" onclick="navigate('training')">Training</a></li><li><a href="#" onclick="navigate('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul><li><a href="#">+27 12 345 6789</a></li><li><a href="#">info@acemodels-potch.co.za</a></li></ul></div><div class="footer-col"></div></div>
+    <div class="footer-bottom"><p>© 2025 Ace Models Potchefstroom. All rights reserved.</p></div>
+  </footer>
+
+</div><!-- /apply -->
+
+<!-- ═══════════════════════════ CONTACT PAGE ═══════════════════════════ -->
+<div class="page" id="page-contact">
+
+  <div class="about-hero">
+    <div class="about-hero-bg"></div>
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+      <div class="page-tag">Get in Touch</div>
+      <h1 class="page-hero-title">We'd Love to <em>Hear</em><br>From You</h1>
+    </div>
+  </div>
+
+  <section>
+    <div class="contact-grid fade-up">
+      <div>
+        <div class="section-eyebrow">Contact Us</div>
+        <h2 class="section-title">Let's <em>Connect</em></h2>
+        <div class="gold-line"></div>
+        <p class="lead-text" style="max-width:100%">Whether you're a prospective student, parent, or industry partner — we welcome every conversation. Reach out and let us help you find the perfect path forward.</p>
+
+        <a href="https://wa.me/27XXXXXXXXX" class="whatsapp-btn" target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Us Now
+        </a>
+
+        <div class="contact-info-cards">
+          <div class="contact-card">
+            <div class="contact-card-icon">📍</div>
+            <div class="contact-card-label">Address</div>
+            <div class="contact-card-value">Potchefstroom, North West<br>South Africa</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">📞</div>
+            <div class="contact-card-label">Phone</div>
+            <div class="contact-card-value">+27 12 345 6789</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">✉️</div>
+            <div class="contact-card-label">Email</div>
+            <div class="contact-card-value">info@acemodels-potch.co.za</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">🕐</div>
+            <div class="contact-card-label">Office Hours</div>
+            <div class="contact-card-value">Monday – Friday: 09:00 – 17:00<br>Saturday: 08:30 – 14:00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT FORM -->
+      <div>
+        <div style="margin-bottom:30px">
+          <div class="section-eyebrow">Send a Message</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" placeholder="Your full name">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="tel" class="form-input" placeholder="+27 xxx xxx xxxx">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <select class="form-select form-input">
+            <option>General Enquiry</option>
+            <option>Class & Schedule Information</option>
+            <option>Pricing & Investment</option>
+            <option>Application Assistance</option>
+            <option>Partnership Enquiry</option>
+            <option>Media & Press</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Tell us how we can help you..." style="min-height:160px"></textarea>
+        </div>
+        <button class="btn-gold" style="width:100%;padding:18px">Send Message ✦</button>
+
+        <!-- MAP PLACEHOLDER -->
+        <div class="map-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(200,169,107,0.4)" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <p>Map — Embed Google Maps here</p>
+          <p style="font-size:0.6rem;opacity:0.3">Replace this with an iframe Google Maps embed for your studio location</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="faq-section fade-up">
+    <div class="text-center" style="margin-bottom:50px">
+      <div class="section-eyebrow" style="justify-content:center">FAQ</div>
+      <h2 class="section-title">Frequently Asked <em>Questions</em></h2>
+      <div class="gold-line center"></div>
+    </div>
+    <div style="max-width:780px;margin:0 auto">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What age groups do you cater for? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">We welcome young women from as young as 5 years old through to age 21. Each age group has its own tailored curriculum and class times. Our programmes grow with your child — from our Junior Foundation classes right through to our Senior Models professional programme.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Do students need prior experience to apply? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Absolutely not. We welcome complete beginners with enthusiasm and potential. What matters to us is a willingness to learn, a desire to grow, and a commitment to the journey. Our coaches are experienced in building confidence from the ground up.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How often are classes held? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Core group classes are held weekly on Saturdays, with additional specialised sessions on Wednesday evenings (public speaking & etiquette) and Thursday evenings (pageant intensive). Private coaching is available by appointment throughout the week.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is included in the monthly fee? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">The monthly programme includes all weekly group classes for your age group, access to our full age-appropriate curriculum, runway and movement training, basic etiquette coaching, and access to our student showcases. Our quarterly and annual programmes include additional benefits such as portfolio photography and competition preparation.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Do you prepare students for national pageants? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes — pageant preparation is a cornerstone of our advanced programmes. We prepare students comprehensively for pageant competition including interview skills, evening wear, on-stage presence, and overall presentation. Our track record includes numerous national title winners and international finalists.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is Ace Models Potchefstroom affiliated with Ace Models International? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes. We are an official affiliate of Ace Models International, which means our training standards, curriculum, and competition pathways align with internationally recognised modelling and personal development programmes.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top"><div class="footer-brand"><h3>Ace Models Potchefstroom</h3><p>Affiliate of Ace Models International. Developing tomorrow's most confident women through elite modelling training.</p><div class="social-links" style="margin-top:28px"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a></div></div><div class="footer-col"><h4>Navigate</h4><ul><li><a href="#" onclick="navigate('home')">Home</a></li><li><a href="#" onclick="navigate('about')">About Us</a></li><li><a href="#" onclick="navigate('achievements')">Achievements</a></li><li><a href="#" onclick="navigate('training')">Training</a></li><li><a href="#" onclick="navigate('apply')">Apply Now</a></li><li><a href="#" onclick="navigate('contact')">Contact</a></li></ul></div><div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:+27123456789">+27 12 345 6789</a></li><li><a href="mailto:info@acemodels-potch.co.za">info@acemodels-potch.co.za</a></li><li><a href="#">Potchefstroom, NW</a></li></ul></div><div class="footer-col"><h4>Social</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">TikTok</a></li><li><a href="#">YouTube</a></li></ul></div></div>
+    <div class="footer-bottom"><p>© 2025 Ace Models Potchefstroom. All rights reserved. Affiliate of Ace Models International.</p><div class="social-links"><a href="#">Privacy Policy</a><a href="#">Terms</a></div></div>
+  </footer>
+
+</div><!-- /contact -->
+
+<script>
+  // ── NAVIGATION
+  function navigate(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + page);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // trigger animations
+    setTimeout(initFadeUp, 100);
+    return false;
+  }
+
+  // ── STICKY NAV
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('mainNav');
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── MOBILE MENU
+  function toggleMobile() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMobile() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // ── FADE UP OBSERVER
+  function initFadeUp() {
+    const els = document.querySelectorAll('.page.active .fade-up');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 100);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    els.forEach(el => { el.classList.remove('visible'); obs.observe(el); });
+  }
+  window.addEventListener('load', initFadeUp);
+  window.addEventListener('scroll', () => {
+    document.querySelectorAll('.page.active .fade-up:not(.visible)').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.88) el.classList.add('visible');
+    });
+  });
+
+  // ── FORM STEPS
+  function goStep(n) {
+    [1,2,3,4].forEach(i => {
+      const el = document.getElementById('form-step-' + i);
+      const step = document.getElementById('step-' + i);
+      if (el) el.style.display = i === n ? 'block' : 'none';
+      if (step) {
+        step.className = 'form-step';
+        if (i === n) step.className += ' active';
+        else if (i < n) step.className += ' done';
+      }
+    });
+    document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function submitForm() {
+    alert('Thank you for your application! The Ace Models Potchefstroom team will be in touch within 48 hours. 🌟');
+    navigate('home');
+  }
+
+  // ── FAQ
+  function toggleFaq(el) {
+    const answer = el.nextElementSibling;
+    const icon = el.querySelector('.faq-icon');
+    const isOpen = answer.classList.contains('open');
+    document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-icon').forEach(i => i.textContent = '+');
+    if (!isOpen) {
+      answer.classList.add('open');
+      icon.textContent = '−';
+    }
+  }
+
+  // ── GALLERY FILE UPLOAD CLICKS
+  document.querySelectorAll('.form-file').forEach(el => {
+    el.addEventListener('click', () => el.querySelector('input[type=file]')?.click());
+  });
+</script>
+</body>
+</html>
