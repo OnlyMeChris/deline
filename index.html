@@ -244,8 +244,8 @@
   /* ── MARQUEE ── */
   .marquee-wrap { overflow: hidden; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); padding: 20px 0; background: var(--white); }
   .marquee { display: flex; gap: 60px; animation: marquee 28s linear infinite; white-space: nowrap; }
-  .marquee-item { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--gold); opacity: 0.6; letter-spacing: 0.08em; flex-shrink: 0; }
-  .marquee-dot { color: var(--gold); opacity: 0.4; }
+  .marquee-item { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--text); opacity: 0.95; letter-spacing: 0.08em; flex-shrink: 0; }
+  .marquee-dot { color: var(--gold); opacity: 0.6; }
   @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
   /* ── TWO-COL LAYOUT ── */
@@ -485,8 +485,12 @@
     .mobile-menu a { font-size: 1.5rem; font-family: 'Cormorant Garamond', serif; color: var(--text); text-decoration: none; letter-spacing: 0.1em; }
     .mobile-menu a:hover { color: var(--gold); }
     section { padding: 70px 24px; }
-    .hero-content { padding: 0 24px; }
+    .hero { padding: 80px 24px 60px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+    .hero-visual { justify-content: center; }
+    .img-card { max-width: 100%; }
     .hero h1 { font-size: 2.8rem; }
+    .hero-scroll { display: none; }
     .two-col { grid-template-columns: 1fr; gap: 50px; }
     .two-col.reverse .col-img { order: 0; }
     .col-img-accent { display: none; }
@@ -1600,3 +1604,4 @@
 </script>
 </body>
 </html>
+
